@@ -47,8 +47,10 @@ jobs:
         run: |
           ctest --test-dir build -C Release --output-on-failure --timeout 180
           if ($LASTEXITCODE -ne 0) {
-            & ./build/Release/workshop_tests.exe -v2 -o -,txt
-            Write-Host "Workshop test exit code: $LASTEXITCODE"
+            & ./build/Release/workshop_tests.exe -v2 -o build/workshop-results.txt,txt
+            $testExitCode = $LASTEXITCODE
+            Get-Content build/workshop-results.txt -ErrorAction Continue
+            Write-Host "Workshop test exit code: $testExitCode"
             exit 1
           }
 

@@ -69,7 +69,7 @@ jobs:
         run: |
           ./package.ps1 -QtDir $env:QT_ROOT_DIR -BuildDir build -Destination portable
           $required = @('Afterimage.exe', 'Qt6Core.dll', 'Qt6Gui.dll', 'Qt6Widgets.dll',
-            'Qt6Network.dll', 'Qt6Concurrent.dll', 'platforms/qwindows.dll',
+            'Qt6Network.dll', 'platforms/qwindows.dll',
             'imageformats/qwebp.dll', 'translations/qtbase_zh_CN.qm', 'vcruntime140.dll',
             'msvcp140.dll', 'qt.conf', 'QUICKSTART.txt')
           foreach ($file in $required) {

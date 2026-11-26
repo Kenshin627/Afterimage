@@ -1,0 +1,12 @@
+# CMake, Visual Studio and local build output
+/build*/
+/out/
+/portable/
+/.vs/
+CMakeUserPresets.json
+*.user
+
+# High-resolution source masters; the runtime embeds their JPEG exports.
+/assets/coast.png
+/assets/night.png
+/assets/pool.png

@@ -1,0 +1,60 @@
+QWidget {color:#e1e3dd;}
+QWidget#root,QDialog {background:#1b1d1f;}
+QWidget#mast,QWidget#leftPanel,QWidget#rightPanel,QWidget#strip,QWidget#stageHead {background:#202224;}
+QWidget#foot {background:#191b1c;}
+QWidget#rule {background:#343638;}
+QLabel {background:transparent;border:0;}
+QLabel#heading {font-size:17px;font-weight:700;color:#f4f4ee;}
+QLabel#subtle {font-size:12px;color:#a0a5a3;}
+QLabel#count {font-family:Consolas;font-size:12px;color:#a7aca8;background:#2c2f30;border-radius:4px;padding:2px 6px;}
+QLabel#mono {font-family:Consolas;font-size:12px;color:#a4aaa5;}
+QLabel#brand {font-family:'Barlow Condensed SemiBold','Barlow Condensed';font-size:29px;font-weight:600;color:#f3f4ec;}
+QLabel#brandCn {font-size:13px;color:#b5b9b3;}
+QPushButton {background:#2c2f30;color:#e4e7df;border:1px solid #404345;border-radius:6px;padding:6px 12px;min-height:18px;}
+QPushButton:hover {background:#35393a;border-color:#626661;}
+QPushButton:pressed {background:#3d4239;}
+QPushButton:disabled {color:#707571;background:#252728;border-color:#303333;}
+QPushButton:focus,QAbstractButton:focus,QLineEdit:focus,QComboBox:focus {border:1px solid #a2b77a;}
+QPushButton#primary {background:#d0ed84;border:1px solid #d0ed84;color:#1f2819;font-weight:700;padding:7px 17px;}
+QPushButton#primary:hover {background:#e1f7a3;}
+QPushButton#primary:disabled {background:#464a3e;color:#959b89;border-color:#464a3e;}
+QPushButton#icon,QPushButton#quiet {background:transparent;border:1px solid transparent;color:#bac0b8;padding:2px 4px;}
+QPushButton#icon:hover,QPushButton#quiet:hover {background:#323536;color:#eff2e9;}
+QPushButton#segment {border:0;background:transparent;color:#a4aaa6;border-radius:4px;padding:3px 8px;font-size:12px;}
+QPushButton#segment:checked {background:#3d4140;color:#f2f5ed;font-weight:600;}
+QPushButton#segment:focus {border:1px solid #8b9a75;}
+QWidget#segments {background:#17191a;border:1px solid #343738;border-radius:6px;}
+QLineEdit,QComboBox,QSpinBox {border:1px solid #3b3e3e;border-radius:5px;background:#17191a;color:#e1e5dd;min-height:24px;padding:2px 7px;selection-background-color:#c9e785;selection-color:#1d221b;}
+QDoubleSpinBox {color:#d2e9a1;border:1px solid #343837;border-radius:4px;background:#272b29;padding:0 3px;min-height:18px;}
+QDoubleSpinBox:disabled,QComboBox:disabled,QCheckBox:disabled {color:#777d78;}
+QDoubleSpinBox:focus {border:1px solid #a4bd73;}
+QScrollArea,QListWidget {background:transparent;border:0;outline:0;}
+QScrollBar:vertical {border:0;background:transparent;width:6px;margin:1px;}
+QScrollBar::handle:vertical {background:#4c5150;border-radius:2px;min-height:26px;}
+QScrollBar::add-line:vertical,QScrollBar::sub-line:vertical {height:0;}
+QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical {background:transparent;}
+QScrollBar:horizontal {height:6px;background:transparent;}
+QScrollBar::handle:horizontal {background:#505452;min-width:28px;border-radius:2px;}
+QScrollBar::add-line:horizontal,QScrollBar::sub-line:horizontal {width:0;}
+QSlider::groove:horizontal {height:3px;background:#414545;border-radius:1px;}
+QSlider::sub-page:horizontal {background:#a7bd75;border-radius:1px;}
+QSlider::handle:horizontal {width:10px;height:10px;margin:-4px 0;background:#d3e9a2;border:1px solid #b8ce8b;border-radius:5px;}
+QSlider:disabled::sub-page:horizontal,QSlider:disabled::handle:horizontal {background:#545954;border-color:#545954;}
+QCheckBox {spacing:8px;padding:3px 0;}
+QPushButton#section {text-align:left;background:transparent;border:0;border-radius:0;font-weight:600;padding-left:15px;}
+QPushButton#section:hover {background:#282b2c;}
+QMenu {background:#26292a;border:1px solid #454948;padding:4px;}
+QMenu::item {padding:7px 24px 7px 12px;}
+QMenu::item:selected,QComboBox QAbstractItemView::item:selected {background:#41473b;color:#eff4e2;}
+QMenu::separator {height:1px;background:#414442;margin:4px 5px;}
+QToolTip {color:#f1f3e8;background:#373c34;border:1px solid #56604b;padding:4px;}
+QListWidget::item:selected {background:#3c4238;color:#fff;}
+QTabWidget#patinaTabs::pane {border:0;border-top:1px solid #373a39;}
+QTabWidget#patinaTabs QTabBar::tab {background:#202224;color:#aeb4ab;border:0;border-bottom:2px solid transparent;padding:10px 19px;}
+QTabWidget#patinaTabs QTabBar::tab:selected {color:#d0ed84;border-bottom-color:#b3ca82;}
+QDialog#patinaDialog QPlainTextEdit {background:#191b1b;color:#e8ece2;border:1px solid #424742;border-radius:5px;padding:6px;selection-background-color:#586447;}
+QDialog#patinaDialog QDoubleSpinBox {min-height:24px;}
+QDialog#patinaDialog QProgressBar {border:0;border-radius:2px;background:#343933;}
+QDialog#patinaDialog QProgressBar::chunk {background:#bedb81;border-radius:2px;}
+QDialog#patinaDialog QSlider {background:transparent;}
+

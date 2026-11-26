@@ -1,0 +1,26 @@
+Afterimage 1.0 — redistributed components
+
+Qt 6.8.3
+Copyright The Qt Company Ltd. and other contributors.
+This distribution uses the open-source Qt libraries dynamically under LGPL-3.0.
+You may replace the Qt DLLs with compatible builds. This package contains the
+LGPL version 3, the referenced GPL version 3, and notices for bundled dependencies.
+Corresponding unmodified upstream source distributions:
+https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtbase-everywhere-src-6.8.3.tar.xz
+https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qtimageformats-everywhere-src-6.8.3.tar.xz
+https://download.qt.io/archive/qt/6.8/6.8.3/submodules/qttranslations-everywhere-src-6.8.3.tar.xz
+
+Barlow Condensed SemiBold
+The Barlow Project Authors. SIL Open Font License version 1.1.
+See Barlow-OFL.txt.
+https://github.com/google/fonts/tree/main/ofl/barlowcondensed
+
+Microsoft Visual C++ runtime, x64
+Copyright Microsoft Corporation. Redistributable components from Visual Studio 2022.
+
+Original project and online material
+蒸気機 by 卜卜口 (itorr), https://magiconch.com/vaporwave/
+Preset parameters, the reference watermark and the online sample catalog are
+attributed to the original project and contributing authors. The desktop client
+fetches original gallery images from the original service when selected.
+

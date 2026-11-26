@@ -85,3 +85,34 @@ jobs:
           path: portable/
           if-no-files-found: error
           retention-days: 14
+
+  publish:
+    name: Publish GitHub Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v') && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ github.ref_name }}
+    steps:
+      - name: Download tested portable application
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: Afterimage-Windows-x64
+          path: portable
+
+      - name: Create release ZIP
+        working-directory: portable
+        run: zip -r ../Afterimage-Windows-x64.zip .
+
+      - name: Publish ZIP to release
+        run: |
+          if gh release view "$RELEASE_TAG" > /dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" Afterimage-Windows-x64.zip --clobber
+          else
+            gh release create "$RELEASE_TAG" Afterimage-Windows-x64.zip \
+              --verify-tag --generate-notes --title "Afterimage $RELEASE_TAG"
+          fi

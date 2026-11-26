@@ -58,6 +58,14 @@
 
 ## 在 Windows 上构建
 
+### 在 GitHub 下载自动打包的 exe
+
+打开仓库的 **Actions → Build Windows EXE**，选择最近一次成功的运行，在页面底部 **Artifacts** 下载 `Afterimage-Windows-x64` ZIP（下载需要登录 GitHub）。解压整个 ZIP 后，双击 `Afterimage.exe`，无需另外安装 Qt。请保留同目录的 DLL、插件及其他文件，不能只复制 exe。
+
+推送到 `main`、推送 `v` 开头的标签或向 `main` 提交 Pull Request 会自动构建并运行四组测试。也可以在 **Run workflow** 手动启动打包。下载文件保留 14 天，过期后可重新运行工作流。当前为公开仓库，工作流使用 GitHub 标准 Windows 构建机器。
+
+### 本机构建
+
 已使用 **Visual Studio 2022、Qt 6.8.3 MSVC 2022 x64** 构建。需要 Visual Studio 的「使用 C++ 的桌面开发」、CMake 3.21+ 和 Qt。工程要求 Qt 6.5+，默认测试需要 Qt Test。下列命令在仓库根目录的 PowerShell 中执行，将第一行改为本机 Qt 路径。
 
 ~~~powershell

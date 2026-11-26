@@ -43,7 +43,8 @@ jobs:
 
       - name: Run tests
         env:
-          QT_QPA_PLATFORM: offscreen
+          # Use the native Windows font database for text rendering tests.
+          QT_QPA_PLATFORM: windows
         run: |
           ctest --test-dir build -C Release --output-on-failure --timeout 180
           if ($LASTEXITCODE -ne 0) {

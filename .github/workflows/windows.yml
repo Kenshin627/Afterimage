@@ -1,0 +1,68 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Windows x64 portable
+    runs-on: windows-2022
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Install Qt 6.8.3
+        uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
+        with:
+          version: '6.8.3'
+          arch: win64_msvc2022_64
+          modules: qtimageformats
+          cache: true
+
+      - name: Configure
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 "-DCMAKE_PREFIX_PATH=$env:QT_ROOT_DIR" -DBUILD_TESTING=ON
+
+      - name: Build Release
+        run: cmake --build build --config Release --parallel 2
+
+      - name: Run tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: ctest --test-dir build -C Release --output-on-failure --timeout 180
+
+      - name: Package portable application
+        run: |
+          ./package.ps1 -QtDir $env:QT_ROOT_DIR -BuildDir build -Destination portable
+          $required = @('Afterimage.exe', 'Qt6Core.dll', 'Qt6Gui.dll', 'Qt6Widgets.dll',
+            'Qt6Network.dll', 'Qt6Concurrent.dll', 'platforms/qwindows.dll',
+            'imageformats/qwebp.dll', 'translations/qtbase_zh_CN.qm', 'vcruntime140.dll',
+            'msvcp140.dll', 'qt.conf', 'QUICKSTART.txt')
+          foreach ($file in $required) {
+            if (-not (Test-Path -LiteralPath (Join-Path portable $file) -PathType Leaf)) {
+              throw "Portable package is missing: $file"
+            }
+          }
+
+      - name: Upload portable ZIP
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: Afterimage-Windows-x64
+          path: portable/
+          if-no-files-found: error
+          retention-days: 14

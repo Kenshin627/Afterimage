@@ -44,7 +44,21 @@ jobs:
       - name: Run tests
         env:
           QT_QPA_PLATFORM: offscreen
-        run: ctest --test-dir build -C Release --output-on-failure --timeout 180
+        run: |
+          ctest --test-dir build -C Release --output-on-failure --timeout 180
+          if ($LASTEXITCODE -ne 0) {
+            & ./build/Release/workshop_tests.exe -v2 -o -,txt
+            Write-Host "Workshop test exit code: $LASTEXITCODE"
+            exit 1
+          }
+
+      - name: Upload test diagnostics
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: Windows-test-logs
+          path: build/Testing/Temporary/
+          retention-days: 7
 
       - name: Package portable application
         run: |

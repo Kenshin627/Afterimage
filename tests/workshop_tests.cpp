@@ -91,7 +91,14 @@ class WorkshopTests : public QObject {
         auto doc = still();
         s.glyphs.characters = " 海浪@";
         s.glyphs.fontSize = 8;
-        auto first = renderWorkshop(doc, Effect::Glyphs, s, false);
+        // Cover the full tonal range: a photo's narrow range can map to a single
+        // glyph when the host has different fonts or CJK fallback glyphs.
+        auto glyphDoc = doc;
+        glyphDoc.image = QImage(256, 96, QImage::Format_RGB32);
+        for (int y = 0; y < glyphDoc.image.height(); ++y)
+            for (int x = 0; x < glyphDoc.image.width(); ++x)
+                glyphDoc.image.setPixel(x, y, qRgb(x, x, x));
+        auto first = renderWorkshop(glyphDoc, Effect::Glyphs, s, false);
         QVERIFY(!first.frame.processed.isNull());
         QVERIFY(first.plainText.endsWith('\n'));
         QSet<QChar> letters;
@@ -101,7 +108,7 @@ class WorkshopTests : public QObject {
         }
         QVERIFY(letters.size() >= 3);
         s.glyphs.leading = 12;
-        auto spaced = renderWorkshop(doc, Effect::Glyphs, s, false);
+        auto spaced = renderWorkshop(glyphDoc, Effect::Glyphs, s, false);
         QVERIFY(first.plainText.count('\n') > spaced.plainText.count('\n'));
         auto poster = renderWorkshop(doc, Effect::Contours, s, false).frame.processed;
         QCOMPARE(poster.size(), doc.image.size());

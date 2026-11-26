@@ -43,14 +43,33 @@ jobs:
 
       - name: Run tests
         env:
-          QT_QPA_PLATFORM: offscreen
-        run: ctest --test-dir build -C Release --output-on-failure --timeout 180
+          # Use the native Windows font database for text rendering tests.
+          QT_QPA_PLATFORM: windows
+        run: |
+          ctest --test-dir build -C Release --output-on-failure --timeout 180
+          if ($LASTEXITCODE -ne 0) {
+            & ./build/Release/workshop_tests.exe -o build/workshop-results.txt,txt
+            $testExitCode = $LASTEXITCODE
+            Get-Content build/workshop-results.txt -ErrorAction Continue
+            Write-Host "Workshop test exit code: $testExitCode"
+            exit 1
+          }
+
+      - name: Upload test diagnostics
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: Windows-test-logs
+          path: |
+            build/Testing/Temporary/
+            build/workshop-results.txt
+          retention-days: 7
 
       - name: Package portable application
         run: |
           ./package.ps1 -QtDir $env:QT_ROOT_DIR -BuildDir build -Destination portable
           $required = @('Afterimage.exe', 'Qt6Core.dll', 'Qt6Gui.dll', 'Qt6Widgets.dll',
-            'Qt6Network.dll', 'Qt6Concurrent.dll', 'platforms/qwindows.dll',
+            'Qt6Network.dll', 'platforms/qwindows.dll',
             'imageformats/qwebp.dll', 'translations/qtbase_zh_CN.qm', 'vcruntime140.dll',
             'msvcp140.dll', 'qt.conf', 'QUICKSTART.txt')
           foreach ($file in $required) {

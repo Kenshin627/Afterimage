@@ -1,0 +1,33 @@
+name: Publish existing tested ZIP
+on:
+  push:
+    branches: [ci/publish-existing-release]
+permissions:
+  actions: read
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Verify source build
+        run: |
+          test "$(gh api repos/Kenshin627/Afterimage/actions/runs/45834150508 --jq .conclusion)" = success
+      - name: Download original artifact ZIP
+        run: gh api repos/Kenshin627/Afterimage/actions/artifacts/15124411895/zip > Afterimage-Windows-x64.zip
+      - name: Verify ZIP integrity
+        run: |
+          python - <<'PY'
+          import pathlib, zipfile
+          path = pathlib.Path('Afterimage-Windows-x64.zip')
+          assert path.stat().st_size == 14973258
+          with zipfile.ZipFile(path) as archive:
+              assert archive.testzip() is None
+              assert 'Afterimage.exe' in archive.namelist()
+          print('Original artifact ZIP verified')
+          PY
+      - name: Upload to existing release
+        run: gh release upload v1.0.0 Afterimage-Windows-x64.zip

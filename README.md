@@ -64,6 +64,21 @@
 
 推送到 `main`、推送 `v` 开头的标签或向 `main` 提交 Pull Request 会自动构建并运行四组测试。也可以在 **Run workflow** 手动启动打包。下载文件保留 14 天，过期后可重新运行工作流。当前为公开仓库，工作流使用 GitHub 标准 Windows 构建机器。
 
+### 发布到 GitHub Release
+
+推送 `v` 开头的新版本标签后，工作流会在构建、四组测试和便携包检查全部通过后，将 `Afterimage-Windows-x64.zip` 发布到对应的 [GitHub Release](https://github.com/Kenshin627/Afterimage/releases)。没有对应 Release 时自动创建并生成版本说明；已有 Release 时保留说明，上传 ZIP。同一标签重新运行成功后会更新同名 ZIP。Release 附件不受 Actions 的 14 天保留期限限制。
+
+例如，在包含工作流配置的最新 `main` 上发布新版本（将版本号改为实际的新版本）：
+
+~~~powershell
+git switch main
+git pull --ff-only
+git tag v1.3.1
+git push origin v1.3.1
+~~~
+
+普通 `main` 推送和 Pull Request 只构建、测试并上传 Actions 产物，不创建 Release。
+
 ### 本机构建
 
 已使用 **Visual Studio 2022、Qt 6.8.3 MSVC 2022 x64** 构建。需要 Visual Studio 的「使用 C++ 的桌面开发」、CMake 3.21+ 和 Qt。工程要求 Qt 6.5+，默认测试需要 Qt Test。下列命令在仓库根目录的 PowerShell 中执行，将第一行改为本机 Qt 路径。
